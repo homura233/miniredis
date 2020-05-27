@@ -72,11 +72,11 @@ func (m *Miniredis) cmdAuth(c *server.Peer, cmd string, args []string) {
 
 	withTx(m, c, func(c *server.Peer, ctx *connCtx) {
 		if m.password == "" {
-			c.WriteError("ERR Client sent AUTH, but no password is set")
+			c.WriteError("ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?")
 			return
 		}
 		if m.password != pw {
-			c.WriteError("ERR invalid password")
+			c.WriteError("WRONGPASS invalid username-password pair")
 			return
 		}
 
